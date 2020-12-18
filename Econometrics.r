@@ -50,7 +50,7 @@ WTIts.diff2 = diff(WTIts, differences = 2)
 WTIts.diff3 = diff(WTIts, differences = 3)
 
 # We can see the stationary pattern
-# 1차 차분을 통해 어느 정도 정상화(stationary) 패턴을 보임
+# 차분을 통해 정상화(stationary) 패턴을 확인
 plot(WTIts, main="WTI")
 plot(WTIts.diff1, main="WTI.diff1")
 plot(WTIts.diff2, main="WTI.diff2")
@@ -62,14 +62,14 @@ summary(ur.df(WTIts.diff2, lags=1, type='drift')) # stationary
 summary(ur.df(WTIts.diff3, lags=1, type='drift')) # more stationary
 
 # ACF and PACF for getting q and p
-# 1차 차분한 데이터로 ARIMA 모형 확인
+# 차분한 데이터로 ARIMA 모형 확인
 acf(WTIts.diff3, lag.max = 30)  # lag 2부터 점선 안에 존재. lag 절단값 = 2 --> MA(1)
 pacf(WTIts.diff3, lag.max = 30) # lag 6부터 점선 안에 존재. lag 절단값 = 6 --> AR(5)
 
 
-# My ARIMA model, ARIMA(5,1,1)
-# where d=1, p=5, q=1
-WTIts.arima = arima(WTIts, order = c(5,1,1))
+# My ARIMA model, ARIMA(5,3,1)
+# where d=3, p=5, q=1
+WTIts.arima = arima(WTIts, order = c(5,3,1))
 
 
 # Automatically detect optimal ARIMA parameters
@@ -78,7 +78,7 @@ WTIts.autoArima = auto.arima(WTIts) # (1,0,0)
 
 
 # ARIMA 비교
-WTIts.arima = arima(WTIts, order = c(5,1,1))
+WTIts.arima = arima(WTIts, order = c(5,3,1))
 WTIts.arima
 WTIts.autoArima
 
